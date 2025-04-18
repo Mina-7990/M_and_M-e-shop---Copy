@@ -1,6 +1,6 @@
 // Import necessary modules
 require('dotenv').config();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 const User = require('../model/userModel');
