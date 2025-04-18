@@ -1,0 +1,71 @@
+.offers {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+.offers-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.offer-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.image-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 200px; /* ارتفاع ثابت للصورة */
+    border-radius: 8px;
+    background: #000; /* لون خلفية أسود لإبراز الصور */
+}
+
+.slider-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* نبدأ بالصورة بحجم طبيعي */
+    max-width: 100%; /* عرض الصورة لا يتجاوز 100% من العنصر */
+    max-height: 100%; /* ارتفاع الصورة لا يتجاوز 100% من العنصر */
+    opacity: 0;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    object-fit: contain; /* الصورة تتناسب مع العنصر ولكن دون قطع أو تشويه */
+}
+
+.slider-image.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.9); /* تأثير Zoom Out مع تصغير الصورة */
+}
+
+.slider-image.exit {
+    opacity: 0;
+    transform: translate(-150%, -50%) scale(1); /* تحريك الصورة إلى اليسار مع تكبير طفيف */
+}
+
+/* Media Queries لتصغير الصور وتغيير حجم الكارد في الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .slider-image {
+        transform: translate(-50%, -50%) scale(0.9); /* تقليل التكبير على الشاشات المتوسطة */
+    }
+    .image-slider {
+        height: 180px; /* تقليل ارتفاع الصورة في الشاشات الصغيرة */
+    }
+}
+
+@media (max-width: 480px) {
+    .slider-image {
+        transform: translate(-50%, -50%) scale(0.8); /* تقليل التكبير بشكل أكبر في الشاشات الصغيرة جدًا */
+    }
+    .image-slider {
+        height: 150px; /* تقليل ارتفاع الصورة أكثر في الشاشات الأصغر */
+    }
+}
