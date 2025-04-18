@@ -14,7 +14,7 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/register', {
+      const { data } = await axios.post('https://m-and-m-e-shop-copy-3.onrender.com/api/auth/register', {
         email,
         password,
         username,

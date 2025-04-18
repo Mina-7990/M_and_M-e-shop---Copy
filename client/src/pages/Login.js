@@ -25,7 +25,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const response = await axios.post("https://m-and-m-e-shop-copy-3.onrender.com/api/auth/login", { email, password });
       const { token, userId, isAdmin } = response.data;
       localStorage.setItem("userInfo", JSON.stringify({ token, userId, isAdmin }));
       console.log("login response:", response.data);
@@ -63,6 +63,9 @@ const LoginPage = () => {
           required
         />
         <button type="submit" className="submit-btn">Login</button>
+        <p className="signup-link">
+          Don't have an account? <Link to="/register">Sign Up</Link>
+        </p>
 
         
       </form>

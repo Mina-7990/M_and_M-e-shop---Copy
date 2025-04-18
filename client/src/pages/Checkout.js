@@ -56,7 +56,7 @@ const CreateOrderPage = () => {
     console.log("Form Data before submission:", formData);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/orders/create', formData);
+      const response = await axios.post('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/create', formData);
 
       if (response.data.message) {
         setMessage(response.data.message);

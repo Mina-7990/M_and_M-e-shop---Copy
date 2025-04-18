@@ -19,8 +19,8 @@ const transporter = nodemailer.createTransport({
 const mailGenerator = new Mailgen({
     theme: 'default',
     product: {
-        name: 'YourAppName',
-        link: 'https://yourappwebsite.com'
+        name: 'm.mscentsperfume',
+        link: 'https://mmscentsperfume.netlify.app/'
     }
 });
 

@@ -15,7 +15,7 @@ const ProductsPage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:5000/api/product/allproducts",
+          "https://m-and-m-e-shop-copy-3.onrender.com/api/product/allproducts",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

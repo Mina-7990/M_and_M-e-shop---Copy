@@ -83,7 +83,7 @@ const AddProduct = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/product/newproduct',
+                'https://m-and-m-e-shop-copy-3.onrender.com/api/product/newproduct',
                 formData,
                 {
                     headers: {

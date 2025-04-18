@@ -10,7 +10,7 @@ const SuccessfulOrdersPage = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/orders/orders/successful');
+                const response = await axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/orders/successful');
                 setOrders(response.data.orders);
                 console.log(response.data.orders);
             } catch (err) {
@@ -25,7 +25,7 @@ const SuccessfulOrdersPage = () => {
 
     const updateOrderStatus = async (orderId, status) => {
         try {
-            await axios.put('http://localhost:5000/api/orders/update-status', {
+            await axios.put('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/update-status', {
                 orderId,
                 status
             });

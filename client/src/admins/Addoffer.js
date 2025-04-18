@@ -11,7 +11,7 @@ const AddOffer = () => {
     // Fetch offers from the backend
     const fetchOffers = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/offer/offers');
+            const response = await axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/offer/offers');
             setOffers(response.data);
         } catch (err) {
             console.error('Error fetching offers:', err.message);

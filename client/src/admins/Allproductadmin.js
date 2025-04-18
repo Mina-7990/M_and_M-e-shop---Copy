@@ -6,7 +6,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/product/allproducts')
+    axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/product/allproducts')
       .then(response => {
         setProducts(response.data);
       })
@@ -16,7 +16,7 @@ const ProductList = () => {
   }, []);
 
   const handleDelete = (productId) => {
-    axios.delete(`http://localhost:5000/api/product/productdelet/${productId}`)
+    axios.delete(`https://m-and-m-e-shop-copy-3.onrender.comapi/product/productdelet/${productId}`)
       .then(() => {
         setProducts(products.filter(product => product._id !== productId));
       })
@@ -35,7 +35,7 @@ const ProductList = () => {
       return;
     }
 
-    axios.put(`http://localhost:5000/api/product/update/${productId}`, {
+    axios.put(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/update/${productId}`, {
       size,
       newSize,
       newPrice: parseFloat(newPrice)

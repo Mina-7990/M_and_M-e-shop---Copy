@@ -13,7 +13,7 @@ const CartPage = () => {
 
     if (userInfo && userInfo.userId) {
       axios
-        .get(`http://localhost:5000/api/product/cart/${userInfo.userId}`)
+        .get(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/cart/${userInfo.userId}`)
         .then((response) => {
           setCartItems(response.data);
           setLoading(false);
@@ -37,7 +37,7 @@ const CartPage = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/product/remove/${userInfo.userId}/${productId}`);
+      const response = await axios.delete(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/remove/${userInfo.userId}/${productId}`);
       
       if (response.data.message === 'Product removed from cart') {
         setCartItems(cartItems.filter((item) => item.ProductId._id !== productId));

@@ -9,7 +9,7 @@ const DeleteOrder = () => {
 
   const deleteOrder = async () => {
     try {
-      const response = await axios.delete(`http://192.168.1.67:5000/api/orders/orders/${orderId}`);
+      const response = await axios.delete(`https://m-and-m-e-shop-copy-3.onrender.com/api/orders/orders/${orderId}`);
       setMessage(response.data.message);
 
       // Optional: Redirect after 2 seconds

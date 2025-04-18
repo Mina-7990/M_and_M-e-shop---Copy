@@ -55,7 +55,7 @@ const ProcessOrderPage = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/orders/remove/${orderId}/${productId}`,
+        `https://m-and-m-e-shop-copy-3.onrender.com/api/orders/remove/${orderId}/${productId}`,
         {
         }
       );
@@ -86,7 +86,7 @@ const ProcessOrderPage = () => {
     setIsProcessing(true); // Set processing to ongoing
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/orders/process/${orderId}`,
+        `https://m-and-m-e-shop-copy-3.onrender.com/api/orders/process/${orderId}`,
         {
           productsToRemove: selectedProducts, // Send selected products to remove
         }

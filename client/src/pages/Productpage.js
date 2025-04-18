@@ -23,7 +23,7 @@ const ProductPage = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/product/productbyid/${productId}`);
+        const response = await axios.get(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/productbyid/${productId}`);
         setProduct(response.data);
         setCoverImage(response.data.cover);
         setPrice(response.data.sizes[0].price);
@@ -56,7 +56,7 @@ const ProductPage = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/product/add-to-card", {
+      const response = await axios.post("https://m-and-m-e-shop-copy-3.onrender.com/api/product/add-to-card", {
         userId: userInfo.userId,
         productId,
         size: selectedSize.size,
