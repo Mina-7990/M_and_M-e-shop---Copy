@@ -107,7 +107,7 @@ const AddOffer = () => {
                             <h4>{offer.name}</h4>
                             <div>
                                 {offer.images.map((img, index) => (
-                                    <img key={index} src={img} alt={`offer-image-${index}`} />
+                                    <img key={index} src={img} alt={`offer-image-${index}`} loading="lazy" />
                                 ))}
                             </div>
                             <button onClick={() => handleDeleteOffer(offer._id)}>Delete Offer</button>

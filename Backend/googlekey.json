@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shafret-cemafor",
+  "private_key_id": "ac38727e15f55a17fab6571ed92f8f45a4753f94",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCMopNssPgrLJRn\n5QSh3wSbgpPZ0MM1DM3KGvburtdI6sfbrz6IxLtdKL4WNNoP4xwM61yMw6Lnq9Ua\nSPfnZudbLLmEHiBLvgUYCmniSu/09drls43GZS6oXPzJpPWvlP6+PHCSJBc9koyB\nHWuN6kVk3M29RodhJb0CTTcFWC3qFVUkkDewYbIWbf7kCK4rdKh+VDaOBClisVkW\nk4TwKJT47N6MaPMd1bWiNvHK85eZSzfE8/adX3QwayX+11WpQ879ZF7VJu7Qnidn\nunEeFx7Axf1lACebuJEMhM1PUPS6HJr7tjfBWzOnC2E/SNE0Hk/9LgtVg7oDFpyU\nFqd0s2CrAgMBAAECggEAFNAep1BNef4//Fw9YkNiKC2b+flWWmyJrCZvcwV3IPh2\nGYIG7DDJVdEoyJqLxxwiU5sleEOfwU+B20D/R0TIaork7bOTrgHyOQuZff7/Ii6c\ndbAsBDeHPy17z8/U+GZBiR/ivQ4QTnF4z8bt2vPXz0SKQj/E21C9dzC8OtNBAEpt\nwfKyAr40auNAAHXqpzRxH290ArcWhS1z+pbF7XUl2llhVzVJB8acgZQ1HQc2zgex\nU+ioNJlHaYKI+sJcBRF2Klmm+DfEExY0nIXpoCNO0g/H5/L6gKizAif5vDwlluO/\nxXNGeQ0J9G92q2EjU2lgB4/PLLGc8d5+sg+O+hZPMQKBgQDBlnSPN10lcAi4tQ+e\njAVmlT5KZGGY/PL6PuQ3Imjo5Vw4/ypG35UddnqEGowfwC0iOe7rNpvrucGSxo0E\nArD3ZnL9cUQ7xNT4ptb17bGckohCEZz9djtgG89VAV5VwLSQ+F2Ym1ZthxJg/SF0\nCZl2HqhCi711NlW0mNgbbETPUwKBgQC5+buVUz3Y+vjmv6tnzbOcSdUjgeVBtWBg\nKUAQYK9MpbR/oj0A8QFRxZISzoL5wVlvlcn/QNJ41/Qt6P4LdNwvrEZBsZ/O3qTY\nbJ+ku4zI2vNhHdYFfnxhuJg6TF3/k7nYM5FRrBALUZVOaqXhY00lpkD7G/Iy3YCe\n6CeHr+x2SQKBgEOyX5Rtoe8jnIkrGAkzoffbnOra655aZoXIVHpLWDCJdJSh9qDO\nMxEYi4OC3RmFVMMxSzGJ6UCntt+i+1E5t7TsaK3kXB4imO9TOLzLoF7Gh0vDaQjh\nvaXAU+LAFcMbHonLsL9bIwAuSekM3BP9/2JlGiYbQ+enVpVPFdORKwbtAoGADfbj\nj/XdKgLGV8VCoJvAhdbBa1Ygmct9vhq61b/8ybuTjxXmkMCIAdTdAA6DpS9QgOF1\ndnYul6ZXjm71THTs56N+7wXgYw8yv5GAd0Uh8B8IsV0lKepyen/65j2/vSYhiUtt\n+Pz7g24P0QCPDhp/u3j9Xh2eFRWux7/U4ApkrgkCgYEAnE1takU8ls2yK3zn8sx4\neVbNIXXycFvq8xfph3jwzRnIpIAhlWDPFWWVKwBlC4umaWK5LUmviCC4w7xrBQtL\nftC6GCa9tV07w7e/OIGn1uWXRpl1HgzgI6SKHtrTu/THEqXjxTcfhyhnZY+sT5Xa\nkYw8sflQa+bYt4rS1ab16o8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-drive@shafret-cemafor.iam.gserviceaccount.com",
+  "client_id": "107571663986219650894",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-drive%40shafret-cemafor.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

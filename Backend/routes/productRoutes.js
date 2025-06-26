@@ -1,7 +1,7 @@
 const express = require('express');
 const { getProducts, addProduct,addToCard,getProductById,getProductsByCategory,deleteProductById,getUserCartById ,updateProduct
     ,updateProductPricesByCategory,updateDiscount,searchProduct,updateProductDiscount,
-    updateProductPrice,getRecentProducts,getCategories,removeFromCart} = require('../controllers/productController');
+    updateProductPrice,getRecentProducts,getCategories,removeFromCart,uploadExcel ,addDefaultSizesToAllProducts,renameProducts} = require('../controllers/productController');
 const jwt = require('jsonwebtoken');
 const User = require('../model/userModel'); // تأكد من وجود موديل المستخدم
 const router = express.Router();
@@ -40,7 +40,7 @@ const admin = (req, res, next) => {
 router.get('/allproducts', getProducts); //done
 
 // Route to add a product (Protected for admin only)
-router.post('/newproduct', protect, admin, addProduct);  //done
+router.post('/newproduct',  addProduct);  //done
 router.post('/add-to-card', addToCard,protect);//done
 router.get('/productbyid/:id', getProductById);//done
 router.get('/category/:category', getProductsByCategory);//done
@@ -62,4 +62,20 @@ router.get('/search', searchProduct);//done
 
 router.put('/product/discount/:id', updateProductDiscount);
 router.delete('/remove/:userId/:productId',removeFromCart);//done 
+
+
+
+// routes/productRoutes.js
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+router.post('/upload-excel', upload.single('file'), uploadExcel);
+
+router.get('/rename', renameProducts);
+
+router.post('/add-default-sizes', addDefaultSizesToAllProducts);
+
+
+
 module.exports = router;

@@ -82,7 +82,7 @@ const orderSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-    }
+    },
 });
 
 // Create and export the Order model

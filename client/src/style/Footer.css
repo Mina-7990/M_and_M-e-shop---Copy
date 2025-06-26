@@ -5,21 +5,23 @@ body {
     min-height: 100vh;
     margin: 0;
     margin-bottom: 0;
+    background-color: #f8f8f8;
   }
   
   .footer {
-    margin-top:300px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px 15px;
+    margin-top: 100px;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 40px 20px;
     flex-shrink: 0; /* يضمن بقاء الفوتر دائمًا في الأسفل */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   }
   
   .footer__content {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -35,10 +37,11 @@ body {
   .footer__contact h4,
   .footer__social h4 {
     font-size: 1.2rem;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #f39c12;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
     display: inline-block;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
+    color: #333333;
   }
   
   .footer__links ul {
@@ -48,43 +51,71 @@ body {
   }
   
   .footer__links li {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
   
   .footer__links li a {
-    color: white;
+    color: #666666;
     text-decoration: none;
+    transition: color 0.3s ease;
   }
   
   .footer__links li a:hover {
-    color: #f39c12;
+    color: #333333;
   }
   
   .footer__contact p {
-    margin: 5px 0;
+    margin: 8px 0;
+    color: #666666;
   }
   
   .footer__social-icons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 15px;
   }
   
   .footer__social-icons a {
-    font-size: 1.5rem;
-    color: white;
+    font-size: 1.8rem;
+    color: #666666;
     text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 12px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    box-shadow: 5px 5px 10px #d9d9d9,
+                -5px -5px 10px #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .footer__social-icons a:hover {
-    color: #f39c12;
+    color: #333333;
+    transform: scale(1.1) rotate(5deg);
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    box-shadow: inset 5px 5px 10px #d9d9d9,
+                inset -5px -5px 10px #ffffff;
+  }
+  
+  .footer__social-icons img {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+  }
+  
+  .footer__social-icons a:hover img {
+    transform: scale(1.1);
   }
   
   .footer__bottom {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 40px;
     font-size: 0.9rem;
-    border-top: 1px solid #34495e;
-    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    color: #666666;
   }
   
   /* استجابة الشاشات */

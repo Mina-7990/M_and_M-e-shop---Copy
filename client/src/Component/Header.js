@@ -21,20 +21,33 @@ const Header = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+    // Add or remove active class to menu icon
+    const menuIcon = document.querySelector('.header__menu-icon');
+    if (menuIcon) {
+      menuIcon.classList.toggle('active');
+    }
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    const menuIcon = document.querySelector('.header__menu-icon');
+    if (menuIcon) {
+      menuIcon.classList.remove('active');
+    }
   };
 
   const handleSearch = async () => {
-    if (!searchQuery.trim()) return; // منع البحث الفارغ
+    if (!searchQuery.trim()) return; // Prevent empty search
     try {
       const response = await axios.get(`http://localhost:5000/api/product/search?query=${searchQuery}`);
-      if (response.data.message === 'No products found') {
+      navigate('/search-results', { state: { products: response.data } });
+    } catch (error) {
+      if (error.response && error.response.status === 404 && error.response.data.message === 'No products found') {
         alert('No products found!');
       } else {
-        navigate('/search-results', { state: { products: response.data } });
+        console.error('Error fetching data:', error);
+        alert('Something went wrong. Please try again.');
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      alert('Something went wrong. Please try again.');
     }
   };
 
@@ -49,36 +62,39 @@ const Header = () => {
     setIsLoggedIn(false);
     setIsAdmin(false);
     navigate('/login'); // توجيه المستخدم إلى صفحة تسجيل الدخول
+    closeMenu();
   };
 
   return (
     <header className="header">
-      <div className="header__logo">
-        <Link to="/">E-Shop</Link>
-      </div>
+      <div className="header__top">
+        <div className="header__logo">
+          <Link to="/">E-Shop</Link>
+        </div>
 
-      <div className="header__menu-icon" onClick={toggleMenu}>
-        <span></span>
-        <span></span>
-        <span></span>
+        <div className={`header__menu-icon ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
 
       <nav className={`header__sidebar ${menuOpen ? 'open' : ''}`}>
         <ul>
           <li>
-            <Link to="/" onClick={() => setMenuOpen(false)} className="home-link">
+            <Link to="/" onClick={closeMenu} className="home-link">
               <FaHome className="home-icon" />
             </Link>
           </li>
         
           <li>
-            <Link to="/myorder" onClick={() => setMenuOpen(false)} className="nav-link">
+            <Link to="/myorder" onClick={closeMenu} className="nav-link">
               <FaListAlt className="nav-icon" /> My Orders
             </Link>
           </li>
           {isAdmin && (
             <li>
-              <Link to="/admin" onClick={() => setMenuOpen(false)} className="nav-link">
+              <Link to="/admin" onClick={closeMenu} className="nav-link">
                 <FaUserShield className="nav-icon" /> Admin Dashboard
               </Link> {/* فقط للمسؤولين */}
             </li>
@@ -91,7 +107,7 @@ const Header = () => {
             </li>
           ) : (
             <li>
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="nav-link">
+              <Link to="/login" onClick={closeMenu} className="nav-link">
                 <FaSignInAlt className="nav-icon" /> Login / Sign Up
               </Link>
             </li>

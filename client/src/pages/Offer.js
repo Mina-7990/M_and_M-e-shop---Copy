@@ -1,6 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import '../style/OffersList.css';
 import axios from 'axios';
+import Loading from '../components/Loading';
+
+// Image proxy logic from Allproduct.js
+const IMAGE_PROXY_URL = "https://images.weserv.nl/?url=https://drive.google.com/uc?id=";
+
+const cleanDriveId = (id) => {
+    if (!id) return null;
+    const match = id.match(/[-\w]{25,}/);
+    return match ? match[0] : null;
+};
+
+const getImageUrl = (cover) => {
+    const cleanId = cleanDriveId(cover);
+    if (!cleanId) return '/default-image.png';
+    return `${IMAGE_PROXY_URL}${cleanId}&w=400&h=300&fit=cover`;
+};
+
+const handleImageError = (e) => {
+    console.warn('Image failed to load:', e.target.src);
+    e.target.src = '/default-image.png';
+    e.target.style.objectFit = 'contain';
+};
+
 const OfferCard = ({ offer }) => {
     const [currentImage, setCurrentImage] = useState(0); // الصورة الحالية
     const [exitingImage, setExitingImage] = useState(null); // الصورة المغادرة
@@ -32,13 +55,17 @@ const OfferCard = ({ offer }) => {
                         }`}
                     >
                         <img
-                            src={image}
+                            src={getImageUrl(image)}
                             alt={`Offer ${index}`}
                             style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                                objectFit: 'contain',
+                                display: 'block',
+                                margin: '0 auto',
                             }}
+                            loading="lazy"
+                            onError={handleImageError}
                         />
                     </div>
                 ))}
@@ -68,7 +95,7 @@ const OffersList = () => {
         fetchOffers();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading />;
     if (error) return <p>{error}</p>;
 
     return (

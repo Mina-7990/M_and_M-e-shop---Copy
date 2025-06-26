@@ -66,3 +66,38 @@
     }
   }
   
+  .home-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: clamp(10px, 2vw, 20px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 4vw, 40px);
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+
+  
+  /* Responsive breakpoints */
+  @media screen and (max-width: 1200px) {
+    .home-container {
+      padding: clamp(8px, 1.5vw, 15px);
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .home-container {
+      padding: clamp(5px, 1vw, 10px);
+      gap: clamp(15px, 3vw, 30px);
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .home-container {
+      padding: clamp(3px, 0.8vw, 5px);
+      gap: clamp(10px, 2vw, 20px);
+    }
+  }
+  

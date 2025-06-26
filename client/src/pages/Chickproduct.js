@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from '../components/Loading';
 
 const ProcessOrderPage = () => {
   const [orderId, setOrderId] = useState(null); // To store orderId
@@ -124,7 +125,7 @@ const ProcessOrderPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading indicator
+    return <Loading />;
   }
 
   return (

@@ -404,6 +404,84 @@ const updateProductDiscount = async (req, res) => {
 };
 
 
+// controllers/productController.js
+const xlsx = require('xlsx');
+
+const uploadExcel = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Please upload a file' });
+    }
+
+    const workbook = xlsx.read(req.file.buffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+    for (const item of data) {
+      // Parse images string into array if needed
+      const images = item.images ? item.images.split(',').map(img => img.trim()) : [];
+
+      const product = new Product({
+        name: item.name,
+        cover: item.cover,
+        images: images,
+        category: item.category,
+        description: item.description,
+      });
+
+      await product.save();
+    }
+
+    res.status(200).json({ message: 'Products uploaded successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error uploading products' });
+  }
+};
+
+
+const addDefaultSizesToAllProducts = async (req, res) => {
+    try {
+      const defaultSizes = [
+        { size: '30 ml', price: 150 },
+        { size: '50 ml', price: 200 },
+        { size: '100 ml', price: 350 }
+      ];
+  
+      const result = await Product.updateMany(
+        {}, // all products
+        { $set: { sizes: defaultSizes } }
+      );
+  
+      res.status(200).json({
+        message: 'Sizes added to all products successfully.',
+        modifiedCount: result.modifiedCount
+      });
+    } catch (error) {
+      console.error('Error updating products:', error);
+      res.status(500).json({ message: 'Server error', error });
+    }
+  };
+
+
+  const renameProducts = async (req, res) => {
+    try {
+      // Find only products in the 'for men' category
+      const products = await Product.find({ category: 'for men' }).sort({ createdAt: 1 });
+  
+      for (let i = 0; i < products.length; i++) {
+        products[i].name = `name${i + 1}`;
+        await products[i].save();
+      }
+  
+      res.status(200).json({ message: 'Product names updated successfully for category "for men".' });
+    } catch (error) {
+      console.error('Rename Error:', error);
+      res.status(500).json({ error: 'Failed to update product names.' });
+    }
+  };
+  
+
 module.exports = {
      getProducts,
      addProduct , 
@@ -420,6 +498,13 @@ module.exports = {
     getCategories,
     searchProduct,
     updateProductDiscount,
-    removeFromCart
-    
+    removeFromCart,
+    uploadExcel,
+    addDefaultSizesToAllProducts,
+    renameProducts
+
 };
+
+
+
+

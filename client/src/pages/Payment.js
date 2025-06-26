@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from '../components/Loading';
 
 const UserInfo = () => {
   const [userData, setUserData] = useState(null);
@@ -128,7 +129,9 @@ const UserInfo = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return <Loading />;
+  }
   if (error) return <p>{error}</p>;
 
   return (

@@ -2,42 +2,53 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../style/register.css';
+import Loading from '../components/Loading';
 
 const SignupPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    phoneNumber: ''
+  });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    
     try {
-      const { data } = await axios.post('https://m-and-m-e-shop-copy-3.onrender.com/api/auth/register', {
-        email,
-        password,
-        username,
-        phoneNumber,
-      });
-  
-      // Extract token and userId correctly
-      const {  userId } = data; 
-  
-      // Save login info in localStorage
-      localStorage.setItem("userInfo", JSON.stringify({ userId }));
-  
-      // Save user email separately
-      localStorage.setItem('email', email);
+      const { data } = await axios.post(
+        'https://m-and-m-e-shop-copy-3.onrender.com/api/auth/register', 
+        formData
+      );
+      
+      // Save email in localStorage for verification
+      localStorage.setItem('email', formData.email);
   
       // Redirect user to the email verification page
       navigate('/verify-email');
     } catch (err) {
       console.error('Error during signup:', err);
-      setError(err.response?.data?.message || 'An error occurred. Please try again.');
+      setError(err.response?.data?.msg || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-  
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="signup-container">
@@ -46,46 +57,50 @@ const SignupPage = () => {
         {error && <p className="error-message">{error}</p>}
         
         <input
+          type="text"
+          name="username"
+          className="input-field"
+          placeholder="Full Name"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+
+        <input
           type="email"
+          name="email"
           className="input-field"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           required
         />
-        
+
         <input
           type="password"
+          name="password"
           className="input-field"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           required
         />
-        
-        <input
-          type="text"
-          className="input-field"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        
+
         <input
           type="tel"
+          name="phoneNumber"
           className="input-field"
           placeholder="Phone Number"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          value={formData.phoneNumber}
+          onChange={handleChange}
           required
         />
         
-        <button type="submit" className="submit-btn">Next Step</button>
+        <button type="submit" className="submit-btn">Register</button>
 
         <ul className="signup-footer">
           <li>
-            <Link to="/login" className="login-link">Login</Link>
+            <Link to="/login" className="login-link">Already have an account? Login</Link>
           </li>
         </ul>
       </form>

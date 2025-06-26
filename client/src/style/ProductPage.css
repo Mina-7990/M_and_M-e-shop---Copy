@@ -1,85 +1,179 @@
-
-  
-  .product-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .card {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 300px;
-    text-align: center;
-    padding:20px;
-    margin-top:20Px
+.product-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f5f5f5;
 }
-  
-  
-  .main-img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+
+.card {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex-direction: row;
+    align-items: flex-start;
   }
-  
-  /* Thumbnail container styling */
-  .thumbnail-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+}
+
+.card-content {
+  flex: 1;
+  padding: 1rem;
+}
+
+.main-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.thumbnail-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.thumbnail:hover {
+  border-color: #0066ff;
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.card-price {
+  font-size: 1.5rem;
+  color: #0066ff;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.size-selection {
+  margin: 2rem 0;
+}
+
+.size-selection p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.size-btn {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.size-btn:hover {
+  background-color: #e9ecef;
+  border-color: #0066ff;
+}
+
+.size-btn.selected {
+  background-color: #0066ff;
+  color: white;
+  border-color: #0066ff;
+}
+
+.buy-now-btn {
+  background-color: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 1rem;
+}
+
+.buy-now-btn:hover {
+  background-color: #0052cc;
+  transform: translateY(-2px);
+}
+
+.buy-now-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.no-sizes-message {
+  color: #dc3545;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8d7da;
+  border-radius: 8px;
+  text-align: center;
+}
+
+
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #dc3545;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .product-page {
+    padding: 1rem;
   }
-  
-  .thumbnail-container img {
+
+  .card {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .thumbnail {
     width: 60px;
-    height: auto;
-    margin: 0 5px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 5px;
+    height: 60px;
   }
-  
-  .thumbnail-container img:hover {
-    border-color: #0066ff;
-  }
-  
-  /* Button Styling */
-  .add-to-cart-btn {
-    background-color: #0066ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .add-to-cart-btn:hover {
-    background-color: #005ce6;
-  }
-  .size-selection {
-    margin-top: 15px;
-  }
-  
-  .size-btn {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    margin: 5px;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .size-btn:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .size-btn.selected {
-    background-color: #0066ff;
-    color: white;
-    border-color: #0066ff;
-  }
+}
   

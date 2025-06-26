@@ -2,45 +2,61 @@
 
 /* Wrapper for the categories page */
 .categories {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
-  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Style for each category box */
-.categories div {
+.categories > div {
+  background-color: #fff;
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: #f9f9f9;
-  width: 200px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hover effect for each category box */
-.categories div:hover {
+.categories > div:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for category name */
 .categories h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
   margin: 0;
+  font-size: 1.2em;
+  color: #333;
+  text-align: center;
 }
 
-/* Loading and error messages */
-.loading, .error {
+
+.error-message {
+  color: #dc3545;
   text-align: center;
-  font-size: 18px;
-  margin-top: 50px;
-  color: #888;
+  padding: 20px;
+  font-size: 1.1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+}
+
+@media (max-width: 768px) {
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
 }

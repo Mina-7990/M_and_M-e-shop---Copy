@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../style/OrdersPage.css"; // Import the CSS file for styling
+import Loading from '../components/Loading';
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ const OrdersPage = () => {
         const userId = userInfo.userId; // Extract userId from userInfo
         console.log("User ID:", userId);
 
-        const response = await axios.get(`https://m-and-m-e-shop-copy-3.onrender.com/api/orders/myorders/${userId}`);
+        const response = await axios.get(`http://localhost:5000/api/orders/myorders/${userId}`);
         const modifiedOrders = response.data.map(order => ({
           userId: order.userId,
           products: order.products.map(product => ({
@@ -41,7 +42,7 @@ const OrdersPage = () => {
             size: product.size, // Added size
             usageDate: product.usageDate, // Added usageDate
           })),
-          location: order.location,
+          fullAddress: order.fullAddress,
           totalAmount: order.totalAmount,
           phoneNumber: order.phoneNumber,
           orderNumber: order.orderNumber,
@@ -66,7 +67,9 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
-  if (loading) return <p className="orders-loading">Loading...</p>;
+  if (loading) {
+    return <Loading />;
+  }
   if (error) return <p className="orders-error">{error}</p>;
 
   return (
@@ -79,11 +82,12 @@ const OrdersPage = () => {
           {orders.map((order, index) => (
             <li key={index} className="order-item">
               <h3 className="order-number">Order Number: {order.orderNumber}</h3>
-              <p className="order-location">Location: {order.location}</p>
+              <p className="order-location">Location: {order.fullAddress}</p>
               <p className="order-phone">Phone Number: {order.phoneNumber}</p>
               <p className="order-total">Total Amount: {order.totalAmount}</p>
               <p className="order-cash">Cash: {order.cash ? 'Yes' : 'No'}</p>
               <p className="order-total">order status:{order.orderstatus}</p>
+              <p className="order-total">date:{new Date(order.createdAt).toLocaleString()}</p>
 
               <ul className="order-products">
                 {order.products.map((product, idx) => (

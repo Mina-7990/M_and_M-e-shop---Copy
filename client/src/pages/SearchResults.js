@@ -2,13 +2,35 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../style/ProductPagev.css';
 
+// Custom image proxy URL (same as Allproduct.js)
+const IMAGE_PROXY_URL = "https://images.weserv.nl/?url=https://drive.google.com/uc?id=";
+
+const cleanDriveId = (id) => {
+  if (!id) return null;
+  const match = id.match(/[-\w]{25,}/);
+  return match ? match[0] : null;
+};
+
+const getImageUrl = (cover) => {
+  const cleanId = cleanDriveId(cover);
+  if (!cleanId) return '/default-image.png';
+  return `${IMAGE_PROXY_URL}${cleanId}&w=400&h=300&fit=cover`;
+};
+
+const handleImageError = (e) => {
+  console.warn('Image failed to load:', e.target.src);
+  e.target.src = '/default-image.png';
+  e.target.style.objectFit = 'contain';
+};
+
 const SearchResults = () => {
   const location = useLocation();
   const { products } = location.state || {};
   const navigate = useNavigate();
 
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`); // التنقل إلى صفحة المنتج باستخدام المعرف
+    localStorage.setItem("selectedProductId", productId);
+    navigate("/product");
   };
 
   return (
@@ -22,11 +44,17 @@ const SearchResults = () => {
               className="product-item-unique"
               onClick={() => handleProductClick(product._id)} // عند الضغط على المنتج، يتم التنقل
             >
-              <img src={product.cover} alt={product.name} className="product-cover-unique" />
+              <img
+                src={getImageUrl(product.cover)}
+                alt={product.name}
+                className="product-cover-unique"
+                onError={handleImageError}
+                loading="lazy"
+              />
               <h3>{product.name}</h3>
               <p><strong>Category:</strong> {product.category}</p>
               <br />
-              <p><strong>Price:</strong> ${product.price.toFixed(2)}</p>
+              <p><strong>Price:</strong> {product.sizes && product.sizes[0] && product.sizes[0].price !== undefined ? `$${product.sizes[0].price.toFixed(2)}` : 'N/A'}</p>
             </div>
           ))}
         </div>

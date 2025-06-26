@@ -1,0 +1,60 @@
+.admin-dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.admin-dashboard-title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 1.2rem 2rem;
+  background-color: #ffffff;
+  color: #333;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-dashboard-title {
+    font-size: 2rem;
+  }
+}
+

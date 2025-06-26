@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../style/catigory.css";
+import Loading from '../components/Loading';
+
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const CategoriesPage = () => {
     const fetchCategories = async () => {
       try {
         const token = localStorage.getItem('token'); // الحصول على التوكن من localStorage
-        const response = await axios.get("https://m-and-m-e-shop-copy-3.onrender.com/api/product/categories", {
+        const response = await axios.get("http://localhost:5000/api/product/categories", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("Categories data:", response.data); // تحقق من البيانات هنا
@@ -29,11 +31,12 @@ const CategoriesPage = () => {
   }, []);
 
   const handleCategoryClick = (categoryName) => {
-    navigate(`/products/${categoryName}`);
+    localStorage.setItem("selectedCategoryName", categoryName); // Store categoryName in localStorage
+    navigate(`/products`); // Navigate without categoryName in the URL
   };
 
   if (loading) {
-    return <div>Loading categories...</div>; // عرض رسالة تحميل
+    return <Loading />;
   }
 
   if (error) {
