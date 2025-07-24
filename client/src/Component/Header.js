@@ -39,7 +39,7 @@ const Header = () => {
   const handleSearch = async () => {
     if (!searchQuery.trim()) return; // Prevent empty search
     try {
-      const response = await axios.get(`https://m-and-m-e-shop-copy-1.onrender.com/api/product/search?query=${searchQuery}`);
+      const response = await axios.get(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/search?query=${searchQuery}`);
       navigate('/search-results', { state: { products: response.data } });
     } catch (error) {
       if (error.response && error.response.status === 404 && error.response.data.message === 'No products found') {

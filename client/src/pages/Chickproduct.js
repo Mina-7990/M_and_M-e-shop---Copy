@@ -30,7 +30,7 @@ const ProcessOrderPage = () => {
 
     if (userId) {
       axios
-        .get(`https://m-and-m-e-shop-copy-1.onrender.com/api/product/cart/${userId}`)
+        .get(`https://m-and-m-e-shop-copy-3.onrender.com/api/product/cart/${userId}`)
         .then((response) => {
           setProducts(response.data); // Update products state with fetched data
           setLoading(false); // Stop loading

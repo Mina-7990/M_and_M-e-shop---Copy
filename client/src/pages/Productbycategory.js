@@ -16,7 +16,7 @@ const ProductsPage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `https://m-and-m-e-shop-copy-1.onrender.com/api/product/category/${categoryName}`,
+          `https://m-and-m-e-shop-copy-3.onrender.com/api/product/category/${categoryName}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
