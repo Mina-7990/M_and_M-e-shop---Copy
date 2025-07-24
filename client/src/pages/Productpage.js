@@ -3,19 +3,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../style/ProductPage.css';
 import Loading from '../components/Loading';
+import CustomAlert from '../components/CustomAlert';
 
 // Custom image proxy URL to bypass Google Drive limits
 const IMAGE_PROXY_URL = "https://images.weserv.nl/?url=https://drive.google.com/uc?id=";
 
 const ProductPage = () => {
-  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [coverImage, setCoverImage] = useState('');
   const [selectedSize, setSelectedSize] = useState(null);
   const [price, setPrice] = useState(0);
-
+  const [coverImage, setCoverImage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertConfig, setAlertConfig] = useState({});
+  const navigate = useNavigate();
   const productId = localStorage.getItem("selectedProductId");
 
   const cleanDriveId = (id) => {
@@ -57,7 +59,7 @@ const ProductPage = () => {
           setPrice(response.data.sizes[0].price);
         }
       } catch (err) {
-        console.error("Error fetching product:", err);
+        // console.error("Error fetching product:", err);
         setError("Failed to load product details. Please try again later.");
       } finally {
         setLoading(false);
@@ -80,7 +82,13 @@ const ProductPage = () => {
     }
 
     if (!selectedSize) {
-      alert("Please select a size before buying.");
+      setAlertConfig({
+        title: "Size Required",
+        message: "Please select a size before buying.",
+        onConfirm: () => setShowAlert(false),
+        showCancel: false
+      });
+      setShowAlert(true);
       return;
     }
 
@@ -95,11 +103,25 @@ const ProductPage = () => {
         }
       );
 
-      alert(response.data.message);
-      navigate("/Addtocard");
+      setAlertConfig({
+        title: "Success",
+        message: response.data.message,
+        onConfirm: () => {
+          setShowAlert(false);
+          navigate("/Addtocard");
+        },
+        showCancel: false
+      });
+      setShowAlert(true);
     } catch (err) {
-      console.error("Error adding to cart:", err);
-      alert("An error occurred. Please try again.");
+      setAlertConfig({
+        title: "Error",
+        message: "An error occurred. Please try again.",
+        onConfirm: () => setShowAlert(false),
+        showCancel: false
+      });
+      setShowAlert(true);
+      
       if (err.response?.status === 401) {
         navigate("/login");
       }
@@ -139,6 +161,13 @@ const ProductPage = () => {
 
   return (
     <div className="product-page">
+      <CustomAlert
+        isOpen={showAlert}
+        onConfirm={alertConfig.onConfirm}
+        onCancel={alertConfig.showCancel ? () => setShowAlert(false) : null}
+        title={alertConfig.title}
+        message={alertConfig.message}
+      />
       <div className="product-card">
         <div className="main-image-container">
           <img

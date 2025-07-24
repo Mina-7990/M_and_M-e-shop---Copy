@@ -18,7 +18,7 @@ const ResetPassword = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/reset-password/${token}`,
+        `https://m-and-m-e-shop-copy-1.onrender.com/api/auth/reset-password/${token}`,
         { newPassword },
         {
           headers: {
@@ -29,7 +29,6 @@ const ResetPassword = () => {
       setMessage(res.data.message); // Success message from the backend
       navigate('/login');  // Redirect to the login page after successful password reset
     } catch (err) {
-      console.error("Error response:", err.response);
       setMessage(err.response?.data?.message || 'Error resetting password');
     }
 };

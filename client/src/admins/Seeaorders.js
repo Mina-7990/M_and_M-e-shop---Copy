@@ -12,7 +12,6 @@ const SuccessfulOrdersPage = () => {
             try {
                 const response = await axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/orders/successful');
                 setOrders(response.data.orders);
-                console.log(response.data.orders);
             } catch (err) {
                 setError('Failed to fetch orders');
             } finally {
@@ -23,20 +22,31 @@ const SuccessfulOrdersPage = () => {
         fetchOrders();
     }, []);
 
+    // Group orders by status
+    const groupedOrders = {
+        'under review': orders.filter(order => order.orderstatus === 'under review'),
+        'preparing': orders.filter(order => order.orderstatus === 'preparing'),
+        'completed': orders.filter(order => order.orderstatus === 'completed')
+    };
+
     const updateOrderStatus = async (orderId, status) => {
-        try {
-            await axios.put('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/update-status', {
-                orderId,
-                status
-            });
-            // Update the local state to reflect the change
-            setOrders(prevOrders =>
-                prevOrders.map(order =>
-                    order._id === orderId ? { ...order, orderstatus: status } : order
-                )
-            );
-        } catch (err) {
-            console.error('Failed to update order status', err);
+        const confirmMessage = `Are you sure you want to change this order status to "${status}"?`;
+        
+        if (window.confirm(confirmMessage)) {
+            try {
+                await axios.put('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/update-status', {
+                    orderId,
+                    status
+                });
+                setOrders(prevOrders =>
+                    prevOrders.map(order =>
+                        order._id === orderId ? { ...order, orderstatus: status } : order
+                    )
+                );
+                alert(`Order status successfully updated to "${status}"`);
+            } catch (err) {
+                alert('Failed to update order status. Please try again.');
+            }
         }
     };
 
@@ -45,45 +55,73 @@ const SuccessfulOrdersPage = () => {
 
     return (
         <div className="successful-orders-page">
-            <h2 className="title">Successful Orders</h2>
-            <ul className="orders-list">
-                {orders.map(order => (
-                    <li key={order._id} className="order-item">
-                        <strong>Order Number:</strong> {order.orderNumber} <br />
-                        <strong>Total Amount:</strong> {order.totalAmount} EGP <br />
-                        <strong>Created At:</strong> {new Date(order.createdAt).toLocaleString()} <br />
-                        <strong>Username:</strong> {order.userId?.username || 'Not Available'} <br />
-                        <strong>Phone Number:</strong> {order.phoneNumber} <br />
-                        <h4>Address Details</h4>
-                        <strong>Full Address:</strong> {order.fullAddress} <br />
-                        <strong>City:</strong> {order.city} <br />
-                        <strong>Governorate:</strong> {order.governorate} <br />
-                        <strong>Street:</strong> {order.street} <br />
-                        <strong>Building:</strong> {order.building} <br />
-                        <strong>Floor:</strong> {order.floor} <br />
-                        <strong>Apartment:</strong> {order.apartment} <br />
-                        <hr />
-                        <h4>Product Details</h4>
-                        {/* Map through the products in the order */}
-                        {order.products && order.products.map((product, index) => (
-                            <div key={index} className="product-item">
-                                <strong>Size:</strong> {product.size} <br />
-                                <strong>Price:</strong> {product.price} EGP <br />
-                                <strong>Usage Date:</strong> {new Date(product.usageDate).toLocaleString()} <br />
-                            </div>
+            <h2 className="title">All Orders</h2>
+            
+            <div className="orders-sections">
+                {/* Under Review Section */}
+                <div className="orders-section under-review-section">
+                    <h3>Under Review ({groupedOrders['under review'].length})</h3>
+                    <ul className="orders-list">
+                        {groupedOrders['under review'].map(order => (
+                            <li key={order._id} className="order-item under-review-order">
+                                <span className="status-badge under-review">Under Review</span>
+                                <strong>Order Number:</strong> {order.orderNumber} <br />
+                                <strong>Total Amount:</strong> {order.totalAmount} EGP <br />
+                                <strong>Username:</strong> {order.userId?.username || 'Not Available'} <br />
+                                <strong>Phone:</strong> {order.phoneNumber} <br />
+                                <div className="order-actions">
+                                    <button className="preparing-btn" onClick={() => updateOrderStatus(order._id, 'preparing')}>
+                                        Mark as Preparing
+                                    </button>
+                                    <button className="completed-btn" onClick={() => updateOrderStatus(order._id, 'completed')}>
+                                        Mark as Completed
+                                    </button>
+                                </div>
+                            </li>
                         ))}
-                        <hr />
-                        <div className="order-actions">
-                            <button onClick={() => updateOrderStatus(order._id, 'preparing')}>
-                                Mark as Preparing
-                            </button>
-                            <button onClick={() => updateOrderStatus(order._id, 'completed')}>
-                                Mark as Completed
-                            </button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+                    </ul>
+                </div>
+
+                {/* Preparing Section */}
+                <div className="orders-section preparing-section">
+                    <h3>Preparing ({groupedOrders['preparing'].length})</h3>
+                    <ul className="orders-list">
+                        {groupedOrders['preparing'].map(order => (
+                            <li key={order._id} className="order-item preparing-order">
+                                <span className="status-badge preparing">Preparing</span>
+                                <strong>Order Number:</strong> {order.orderNumber} <br />
+                                <strong>Total Amount:</strong> {order.totalAmount} EGP <br />
+                                <strong>Username:</strong> {order.userId?.username || 'Not Available'} <br />
+                                <strong>Phone:</strong> {order.phoneNumber} <br />
+                                <div className="order-actions">
+                                    <button className="completed-btn" onClick={() => updateOrderStatus(order._id, 'completed')}>
+                                        Mark as Completed
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Completed Section */}
+                <div className="orders-section completed-section">
+                    <h3>Completed ({groupedOrders['completed'].length})</h3>
+                    <ul className="orders-list">
+                        {groupedOrders['completed'].map(order => (
+                            <li key={order._id} className="order-item completed-order">
+                                <span className="status-badge completed">Completed</span>
+                                <strong>Order Number:</strong> {order.orderNumber} <br />
+                                <strong>Total Amount:</strong> {order.totalAmount} EGP <br />
+                                <strong>Username:</strong> {order.userId?.username || 'Not Available'} <br />
+                                <strong>Phone:</strong> {order.phoneNumber} <br />
+                                <div className="order-final">
+                                    ✅ Order Completed
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 };

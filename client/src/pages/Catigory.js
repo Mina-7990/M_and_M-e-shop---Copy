@@ -14,13 +14,11 @@ const CategoriesPage = () => {
     const fetchCategories = async () => {
       try {
         const token = localStorage.getItem('token'); // الحصول على التوكن من localStorage
-        const response = await axios.get("http://localhost:5000/api/product/categories", {
+        const response = await axios.get("https://m-and-m-e-shop-copy-1.onrender.com/api/product/categories", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Categories data:", response.data); // تحقق من البيانات هنا
         setCategories(response.data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
         setError('Failed to load categories');
       } finally {
         setLoading(false);

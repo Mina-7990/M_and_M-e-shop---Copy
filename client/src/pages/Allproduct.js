@@ -27,7 +27,6 @@ const Allproduct = () => {
         setProducts(response.data || []);
       } catch (err) {
         setError("Failed to load products. Please try again later.");
-        console.error("Error fetching products:", err);
       } finally {
         setLoading(false);
       }
@@ -53,7 +52,7 @@ const Allproduct = () => {
 
   const handleImageError = (e) => {
     // اطبع رسالة في الكونسول مع رابط الصورة
-    console.warn('Image failed to load:', e.target.src);
+    // console.warn('Image failed to load:', e.target.src);
     e.target.src = '/default-image.png';
     e.target.style.objectFit = 'contain';
   };

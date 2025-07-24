@@ -5,8 +5,7 @@ import '../style/products.css'
 import Loading from '../components/Loading';
 
 const ProductsPage = () => {
-  const categoryName = localStorage.getItem("selectedCategoryName"); 
-  console.log(categoryName);
+  const categoryName = localStorage.getItem("selectedCategoryName");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,14 +16,13 @@ const ProductsPage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:5000/api/product/category/${categoryName}`,
+          `https://m-and-m-e-shop-copy-1.onrender.com/api/product/category/${categoryName}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setProducts(response.data);
       } catch (error) {
-        console.error("Error fetching products:", error);
         setError("Failed to load products");
       } finally {
         setLoading(false);
@@ -55,7 +53,6 @@ const ProductsPage = () => {
   };
 
   const handleImageError = (e) => {
-    console.warn('Image failed to load:', e.target.src);
     e.target.src = '/default-image.png';
     e.target.style.objectFit = 'contain';
   };

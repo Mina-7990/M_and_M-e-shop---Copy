@@ -16,6 +16,9 @@ const AdminDashboardPage = () => {
           Add offer
         </Link>
 
+        <Link to="/admin/add-promo-code" className="button">
+          Manage Promo Codes
+        </Link>
 
         <Link to="/admin/all-products5" className="button">
           allproducts

@@ -18,7 +18,7 @@ const getImageUrl = (cover) => {
 };
 
 const handleImageError = (e) => {
-  console.warn('Image failed to load:', e.target.src);
+  // console.warn('Image failed to load:', e.target.src);
   e.target.src = '/default-image.png';
   e.target.style.objectFit = 'contain';
 };

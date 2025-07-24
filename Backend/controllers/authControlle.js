@@ -56,7 +56,7 @@ exports.register = async (req, res) => {
                     button: {
                         color: '#22BC66',
                         text: `Verification Code: ${verificationCode}`,
-                        link: 'https://yourappwebsite.com/verify'
+                        link: 'https://mmscentsperfume.netlify.app'
                     }
                 },
                 outro: 'If you did not register, ignore this email.'

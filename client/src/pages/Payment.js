@@ -29,7 +29,7 @@ const UserInfo = () => {
           return;
         }
 
-        const { data } = await axios.get("http://localhost:5000/api/auth/info", {
+        const { data } = await axios.get("https://m-and-m-e-shop-copy-1.onrender.com/api/auth/info", {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
 
@@ -77,7 +77,7 @@ const UserInfo = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/paymob/create-payment",
+        "https://m-and-m-e-shop-copy-1.onrender.com/api/paymob/create-payment",
         paymentData,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -87,7 +87,6 @@ const UserInfo = () => {
       const iframeUrl = response.data.iframeUrl;
       window.location.href = iframeUrl;
     } catch (err) {
-      console.error("Error making payment:", err);
       setError(err.response?.data?.message || "An error occurred. Please try again.");
     } finally {
       setProcessingPayment(false);
@@ -114,17 +113,14 @@ const UserInfo = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${orderId}/activate-cash-payment`,
+        `https://m-and-m-e-shop-copy-1.onrender.com/api/orders/${orderId}/activate-cash-payment`,
         {},
         { headers: { Authorization: `Bearer ${userInfo.token}` } }
       );
 
-      console.log("Cash payment activated:", response.data);
-
       // توجيه المستخدم إلى صفحة أخرى بعد نجاح العملية
       navigate("/cash-success");
     } catch (err) {
-      console.error("Error activating cash payment:", err);
       setError(err.response?.data?.message || "An error occurred. Please try again.");
     }
   };

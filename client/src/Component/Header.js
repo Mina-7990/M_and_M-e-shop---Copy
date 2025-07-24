@@ -39,13 +39,12 @@ const Header = () => {
   const handleSearch = async () => {
     if (!searchQuery.trim()) return; // Prevent empty search
     try {
-      const response = await axios.get(`http://localhost:5000/api/product/search?query=${searchQuery}`);
+      const response = await axios.get(`https://m-and-m-e-shop-copy-1.onrender.com/api/product/search?query=${searchQuery}`);
       navigate('/search-results', { state: { products: response.data } });
     } catch (error) {
       if (error.response && error.response.status === 404 && error.response.data.message === 'No products found') {
         alert('No products found!');
       } else {
-        console.error('Error fetching data:', error);
         alert('Something went wrong. Please try again.');
       }
     }
@@ -69,7 +68,7 @@ const Header = () => {
     <header className="header">
       <div className="header__top">
         <div className="header__logo">
-          <Link to="/">E-Shop</Link>
+          <Link to="/">M&M store</Link>
         </div>
 
         <div className={`header__menu-icon ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>

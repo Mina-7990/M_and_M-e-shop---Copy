@@ -3,10 +3,13 @@ const User = require('../model/userModel');
 const Product = require('../model/productModel');
 const mongoose = require('mongoose');
 const nodemailer = require("nodemailer");
+const PromoCode = require('../model/premocode');
 
 const createOrder = async (req, res) => {
   try {
-    const { userId, building, street, floor, governorate, city, apartment, fullAddress, cash } = req.body;
+    const { userId, building, street, floor, governorate, city, apartment, fullAddress, cash, promoCode } = req.body;
+
+    console.log('Received promoCode:', promoCode); // Add this for debugging
 
     // Validate required fields
     if (!userId || !building || !street || !floor || !governorate || !city || !apartment || !fullAddress) {
@@ -47,7 +50,7 @@ const createOrder = async (req, res) => {
         productId: product._id,
         size: selectedSize,
         price: sizeDetails.price,
-        usageDate: item.usageDate, // Include usage date from Addtocard
+        usageDate: item.usageDate,
       });
     }
 
@@ -55,16 +58,63 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'No valid products found' });
     }
 
-    // Generate a unique order number (improve uniqueness)
+    // Promo code validation and discount calculation
+    let promoCodeApplied = null;
+    let discountAmount = 0;
+    let priceBeforeDiscount = totalAmount;
+    let priceAfterDiscount = totalAmount;
+
+    if (promoCode && promoCode.trim()) {
+      console.log('Processing promo code:', promoCode); // Add this for debugging
+      
+      const promoCodeDoc = await PromoCode.findOne({ 
+        code: promoCode.trim().toUpperCase(),
+        isActive: true 
+      });
+
+      if (!promoCodeDoc) {
+        return res.status(400).json({ message: 'Invalid promo code' });
+      }
+
+      const currentDate = new Date();
+      
+      // Check if promo code is within valid date range
+      if (currentDate < promoCodeDoc.startDate || currentDate > promoCodeDoc.endDate) {
+        return res.status(400).json({ message: 'Promo code is not valid at this time' });
+      }
+
+      // Check usage limit
+      if (promoCodeDoc.usageLimit && promoCodeDoc.usedCount >= promoCodeDoc.usageLimit) {
+        return res.status(400).json({ message: 'Promo code usage limit exceeded' });
+      }
+
+      // Calculate percentage-based discount
+      discountAmount = (totalAmount * promoCodeDoc.discountValue) / 100;
+      priceAfterDiscount = Math.max(0, totalAmount - discountAmount);
+      promoCodeApplied = promoCodeDoc.code;
+
+      console.log('Discount calculation:', {
+        totalAmount,
+        discountPercentage: promoCodeDoc.discountValue,
+        discountAmount,
+        priceAfterDiscount
+      });
+
+      // Update promo code usage count
+      promoCodeDoc.usedCount += 1;
+      await promoCodeDoc.save();
+    }
+
+    // Generate a unique order number
     const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
 
-    // Create the order with the full cart data (including productId, size, price, usageDate)
+    // Create the order
     const order = new Order({
       userId,
       phoneNumber,
-      products: productDetails,  // Push all the product details (productId, size, price, usageDate)
+      products: productDetails,
       building,
-      totalAmount,
+      totalAmount: priceAfterDiscount,
       street,
       floor,
       governorate,
@@ -73,6 +123,7 @@ const createOrder = async (req, res) => {
       fullAddress,
       orderNumber,
       cash,
+      premocodeinorder: promoCodeApplied,
     });
 
     // Save the order to the database
@@ -86,9 +137,13 @@ const createOrder = async (req, res) => {
       message: 'Order created successfully',
       orderId: order._id,
       order,
+      priceBeforeDiscount,
+      priceAfterDiscount,
+      discountAmount,
+      promoCodeApplied
     });
   } catch (error) {
-    console.error(error);  // Log the error for better debugging
+    console.error('Error creating order:', error);
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
@@ -560,3 +615,12 @@ module.exports = { createOrder,processOrderController
    getAllSuccessfulOrders,scheduleDailyOrderReport
   ,updateOrderStatus,deleteOrder
 };
+
+
+
+
+
+
+
+
+

@@ -77,7 +77,7 @@ const AddProduct = () => {
         e.preventDefault();
 
         if (!token) {
-            console.log("No token found");
+            // console.log("No token found");
             return;
         }
 
@@ -91,7 +91,7 @@ const AddProduct = () => {
                     }
                 }
             );
-            console.log('Product added successfully', response.data);
+            // console.log('Product added successfully', response.data);
             setMessage("Product added successfully!");
             setIsSuccess(true);
             setFormData({
@@ -104,7 +104,7 @@ const AddProduct = () => {
                 sizes: [{ size: '', price: '' }],
             });
         } catch (error) {
-            console.error('Error adding product', error.response?.data || error.message);
+            // console.error('Error adding product', error.response?.data || error.message);
             setMessage("Error adding product. Please try again!");
             setIsSuccess(false);
         }

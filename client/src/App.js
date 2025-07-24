@@ -23,6 +23,7 @@ import VerifyEmail from './pages/VerifyEmail';
 import Delet from './pages/Delet';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Boot from './boot-to-wekup-render/Boot';
 
 const App = () => {
   // التحقق من حالة المستخدم من localStorage
@@ -30,6 +31,7 @@ const App = () => {
 
   return (
     <Router>
+      <Boot />
       <Header />
       <main>
         <Routes>
@@ -67,3 +69,4 @@ const App = () => {
 };
 
 export default App;
+

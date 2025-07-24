@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../style/CreateOrderPage.css'; // Import the CSS file
+import CustomAlert from '../components/CustomAlert';
+import '../style/CreateOrderPage.css';
 
 const CreateOrderPage = () => {
   const [formData, setFormData] = useState({
@@ -14,11 +15,15 @@ const CreateOrderPage = () => {
     apartment: '',
     fullAddress: '',
     cash: false,
+    premocodeinorder: '', // Add promo code field
   });
 
   const [message, setMessage] = useState('');
   const [order, setOrder] = useState(null);
   const [warning, setWarning] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [promoCodeStatus, setPromoCodeStatus] = useState('');
+  const [discountInfo, setDiscountInfo] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,19 +49,22 @@ const CreateOrderPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Show warning before creating order
     const userConfirmed = window.confirm("Are you sure you want to create this order with cash payment?");
     if (!userConfirmed) {
       setWarning("Order creation was canceled by the user.");
       return;
     }
-    setWarning(''); // Clear warning if user confirms
-
-    // Debug: Log form data before submission
-    console.log("Form Data before submission:", formData);
+    setWarning('');
 
     try {
-      const response = await axios.post('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/create', formData);
+      const orderData = {
+        ...formData,
+        promoCode: formData.premocodeinorder.trim() || null
+      };
+
+      console.log('Sending order data:', orderData); // Add this for debugging
+
+      const response = await axios.post('http://localhost:5000/api/orders/create', orderData);
 
       if (response.data.message) {
         setMessage(response.data.message);
@@ -68,8 +76,14 @@ const CreateOrderPage = () => {
       // Navigate to MyOrderPage after successful order creation
       navigate('/myorder');
     } catch (error) {
+      console.error('Error details:', error.response?.data); // Add this for debugging
       setMessage(error.response?.data?.message || 'Something went wrong');
     }
+  };
+
+  const handleCancelOrder = () => {
+    setShowAlert(false);
+    setWarning("Order creation was canceled by the user.");
   };
 
   return (
@@ -109,6 +123,17 @@ const CreateOrderPage = () => {
           <div>
             <label className="create-order-label">Full Address:</label>
             <input className="create-order-input" type="text" name="fullAddress" value={formData.fullAddress} onChange={handleChange} required />
+          </div>
+          <div>
+            <label className="create-order-label">Promo Code (Optional):</label>
+            <input 
+              className="create-order-input" 
+              type="text" 
+              name="premocodeinorder" 
+              value={formData.premocodeinorder} 
+              onChange={handleChange} 
+              placeholder="Enter promo code"
+            />
           </div>
           <div>
             <label className="create-order-label">

@@ -28,7 +28,7 @@ const ResponsePage = () => {
       setIsRequestSent(true); // تعيين الحالة لإيقاف الطلبات المتكررة
 
       axios
-        .post('http://localhost:5000/api/orders/update-transaction', {
+        .post('https://m-and-m-e-shop-copy-1.onrender.com/api/orders/update-transaction', {
           id,
           pending,
           amount_cents: amountCents,
@@ -39,8 +39,6 @@ const ResponsePage = () => {
           orderNumber: orderNumberParam,
         })
         .then((response) => {
-          console.log('Response from backend:', response.data);
-
           if (response.data.order?.success) {
             setStatusMessage('Payment Successful!');
             setTransactionCode(response.data.order.txn_response_code);
@@ -51,9 +49,6 @@ const ResponsePage = () => {
             setStatusMessage('Payment Failed2!');
           }
         })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
     } else {
     }
   }, [isRequestSent]); // الاعتماد على isRequestSent فقط لتجنب طلبات متكررة

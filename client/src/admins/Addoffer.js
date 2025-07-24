@@ -14,7 +14,7 @@ const AddOffer = () => {
             const response = await axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/offer/offers');
             setOffers(response.data);
         } catch (err) {
-            console.error('Error fetching offers:', err.message);
+            // console.error('Error fetching offers:', err.message);
         }
     };
 
@@ -30,7 +30,7 @@ const AddOffer = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/offer/add-Offer', {
+            const response = await axios.post('https://m-and-m-e-shop-copy-1.onrender.com/api/offer/add-Offer', {
                 name,
                 images,
             });
@@ -56,7 +56,7 @@ const AddOffer = () => {
 
     const handleDeleteOffer = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/offer/offers/${id}`);
+            await axios.delete(`https://m-and-m-e-shop-copy-1.onrender.com/api/offer/offers/${id}`);
             setOffers(offers.filter((offer) => offer._id !== id)); // Remove the deleted offer from the state
             setSuccessMessage('Offer deleted successfully!');
         } catch (err) {

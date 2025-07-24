@@ -10,9 +10,7 @@ const ProductList = () => {
       .then(response => {
         setProducts(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-      });
+      // console.error('Error fetching products:', error);
   }, []);
 
   const handleDelete = (productId) => {
@@ -20,9 +18,7 @@ const ProductList = () => {
       .then(() => {
         setProducts(products.filter(product => product._id !== productId));
       })
-      .catch(error => {
-        console.error('Error deleting product:', error);
-      });
+      // console.error('Error deleting product:', error);
   };
 
   const handleUpdateSizeAndPrice = (productId) => {
@@ -46,10 +42,8 @@ const ProductList = () => {
           setProducts(products.map(p => p._id === productId ? updated : p));
         }
       })
-      .catch(error => {
-        console.error('خطأ أثناء التعديل:', error);
-        alert('حدث خطأ أثناء تعديل المنتج');
-      });
+      // console.error('خطأ أثناء التعديل:', error);
+      // alert('حدث خطأ أثناء تعديل المنتج');
   };
 
   return (

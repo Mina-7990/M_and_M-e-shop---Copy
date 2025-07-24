@@ -8,6 +8,8 @@ const productRoutes = require('./routes/productRoutes'); // Import product route
 const offerRoutes = require('./routes/OfferRoute'); // Import offer routes
 const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRouts');
+const promoCodeRoutes = require('./routes/premocode');
+
 const { scheduleDailyOrderReport } = require('./controllers/orderController');
 
 
@@ -16,13 +18,15 @@ dotenv.config();
 
 const app = express();
 cron.schedule('0 0 * * *', scheduleDailyOrderReport);
-// Enable CORS
+// Enable CORS first
 app.use(cors());
 
-// Middleware to parse JSON
-app.use(express.json());
+// Middleware to parse JSON - make sure this comes before routes
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Use routes
+// Then your routes
+app.use('/api/promocodes', promoCodeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/offer', offerRoutes);

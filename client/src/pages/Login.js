@@ -28,7 +28,6 @@ const LoginPage = () => {
       const response = await axios.post("https://m-and-m-e-shop-copy-3.onrender.com/api/auth/login", { email, password });
       const { token, userId, isAdmin } = response.data;
       localStorage.setItem("userInfo", JSON.stringify({ token, userId, isAdmin }));
-      console.log("login response:", response.data);
 
       if (isAdmin) {
         navigate("/admin");

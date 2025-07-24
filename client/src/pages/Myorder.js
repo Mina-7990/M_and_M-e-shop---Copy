@@ -22,9 +22,8 @@ const OrdersPage = () => {
         }
   
         const userId = userInfo.userId; // Extract userId from userInfo
-        console.log("User ID:", userId);
 
-        const response = await axios.get(`http://localhost:5000/api/orders/myorders/${userId}`);
+        const response = await axios.get(`https://m-and-m-e-shop-copy-1.onrender.com/api/orders/myorders/${userId}`);
         const modifiedOrders = response.data.map(order => ({
           userId: order.userId,
           products: order.products.map(product => ({
@@ -51,7 +50,6 @@ const OrdersPage = () => {
           createdAt: order.createdAt,
           orderstatus: order.orderstatus,
         }));
-        console.log("Modified Orders:", modifiedOrders);
 
         // Sort the orders by createdAt date in descending order
         modifiedOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -98,6 +96,8 @@ const OrdersPage = () => {
                   </li>
                 ))}
               </ul>
+
+               <p>Within 10 minutes you will receive an email to confirm the order and you will have 12 hours to cancel the order if you want.</p>
             </li>
           ))}
         </ul>

@@ -7,6 +7,10 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    premocodeinorder: {
+        type: String,
+        default: null,
+    },
     products: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,

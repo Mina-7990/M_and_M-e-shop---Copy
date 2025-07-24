@@ -39,7 +39,7 @@ const SignupPage = () => {
       // Redirect user to the email verification page
       navigate('/verify-email');
     } catch (err) {
-      console.error('Error during signup:', err);
+      // console.error('Error during signup:', err);
       setError(err.response?.data?.msg || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);

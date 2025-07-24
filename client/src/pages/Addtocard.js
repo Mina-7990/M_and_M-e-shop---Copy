@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../style/CartPage.css'; // Import CSS for styling
 import Loading from '../components/Loading';
+import CustomAlert from '../components/CustomAlert';
 
 // Custom image proxy URL (replace with your own proxy server if needed)
 const IMAGE_PROXY_URL = "https://images.weserv.nl/?url=https://drive.google.com/uc?id=";
@@ -21,7 +22,7 @@ const getImageUrl = (cover) => {
 };
 
 const handleImageError = (e) => {
-  console.warn('Image failed to load:', e.target.src);
+  // console.warn('Image failed to load:', e.target.src);
   e.target.src = '/default-image.png';
   e.target.style.objectFit = 'contain';
 };
@@ -29,6 +30,8 @@ const handleImageError = (e) => {
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertConfig, setAlertConfig] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,12 +45,21 @@ const CartPage = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error('Error fetching cart items', error);
+          // console.error('Error fetching cart items', error);
           setLoading(false);
         });
     } else {
       setLoading(false);
-      alert('User not found! Please log in.');
+      setAlertConfig({
+        title: "Login Required",
+        message: "User not found! Please log in.",
+        onConfirm: () => {
+          setShowAlert(false);
+          navigate('/login');
+        },
+        showCancel: false
+      });
+      setShowAlert(true);
     }
   }, []);
 
@@ -68,7 +80,7 @@ const CartPage = () => {
         alert('Failed to remove product');
       }
     } catch (error) {
-      console.error('Error removing product', error);
+      // console.error('Error removing product', error);
       alert('An error occurred while removing the product.');
     }
   };
@@ -90,6 +102,13 @@ const CartPage = () => {
 
   return (
     <div className="cart-container">
+      <CustomAlert
+        isOpen={showAlert}
+        onConfirm={alertConfig.onConfirm}
+        onCancel={alertConfig.showCancel ? () => setShowAlert(false) : null}
+        title={alertConfig.title}
+        message={alertConfig.message}
+      />
       <h1 className="cart-title">Cart Items</h1>
       {cartItems.length === 0 ? (
         <p className="cart-empty">Your cart is empty</p>

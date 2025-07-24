@@ -30,13 +30,13 @@ const ProcessOrderPage = () => {
 
     if (userId) {
       axios
-        .get(`http://localhost:5000/api/product/cart/${userId}`)
+        .get(`https://m-and-m-e-shop-copy-1.onrender.com/api/product/cart/${userId}`)
         .then((response) => {
           setProducts(response.data); // Update products state with fetched data
           setLoading(false); // Stop loading
         })
         .catch((error) => {
-          console.error("Error fetching cart items", error);
+          // console.error("Error fetching cart items", error);
           setError("Failed to fetch cart items. Please try again later."); // Display error message
           setLoading(false); // Stop loading
         });
@@ -69,7 +69,7 @@ const ProcessOrderPage = () => {
         );
       }
     } catch (error) {
-      console.error("Error deleting product:", error);
+      // console.error("Error deleting product:", error);
       if (error.response) {
         alert(`Failed to delete product: ${error.response.data.message}`);
       } else if (error.request) {
