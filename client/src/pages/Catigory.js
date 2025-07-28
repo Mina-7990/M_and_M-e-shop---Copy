@@ -14,7 +14,7 @@ const CategoriesPage = () => {
     const fetchCategories = async () => {
       try {
         const token = localStorage.getItem('token'); // الحصول على التوكن من localStorage
-        const response = await axios.get("https://m-and-m-e-shop-copy-1.onrender.com/api/product/categories", {
+        const response = await axios.get("https://m-and-m-e-shop-copy-3.onrender.com/api/product/categories", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCategories(response.data);

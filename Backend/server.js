@@ -33,6 +33,11 @@ app.use('/api/offer', offerRoutes);
 app.use('/api/paymob', paymentRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Simple hi endpoint
+app.get('/api/hi', (req, res) => {
+    res.json({ message: 'hi' });
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

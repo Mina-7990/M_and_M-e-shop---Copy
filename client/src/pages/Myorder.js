@@ -23,7 +23,7 @@ const OrdersPage = () => {
   
         const userId = userInfo.userId; // Extract userId from userInfo
 
-        const response = await axios.get(`https://m-and-m-e-shop-copy-1.onrender.com/api/orders/myorders/${userId}`);
+        const response = await axios.get(`https://m-and-m-e-shop-copy-3.onrender.com/api/orders/myorders/${userId}`);
         const modifiedOrders = response.data.map(order => ({
           userId: order.userId,
           products: order.products.map(product => ({

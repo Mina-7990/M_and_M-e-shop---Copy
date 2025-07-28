@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 const Boot = () => {
     useEffect(() => {
         const keepAlive = () => {
-            fetch('https://m-and-m-e-shop-copy-3.onrender.com/api/orders/send-order-email', {
+            fetch('https://m-and-m-e-shop-copy-3.onrender.com/api/hi', {
                 method: 'GET'
             })
             .then(response => response.json())

@@ -21,7 +21,7 @@ const AddPromoCode = () => {
 
     const fetchPromoCodes = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/promocodes/all');
+            const response = await axios.get('https://m-and-m-e-shop-copy-3.onrender.com/api/promocodes/all');
             setPromoCodes(response.data);
         } catch (error) {
             console.error('Error fetching promo codes:', error);
@@ -41,12 +41,12 @@ const AddPromoCode = () => {
         try {
             if (editingId) {
                 // Update existing promo code
-                await axios.put(`http://localhost:5000/api/promocodes/update/${editingId}`, formData);
+                await axios.put(`https://m-and-m-e-shop-copy-3.onrender.com/api/promocodes/update/${editingId}`, formData);
                 setMessage('Promo code updated successfully!');
                 setEditingId(null);
             } else {
                 // Add new promo code
-                await axios.post('http://localhost:5000/api/promocodes/add', formData);
+                await axios.post('https://m-and-m-e-shop-copy-3.onrender.com/api/promocodes/add', formData);
                 setMessage('Promo code added successfully!');
             }
             
@@ -79,7 +79,7 @@ const AddPromoCode = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this promo code?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/promocodes/delete/${id}`);
+                await axios.delete(`https://m-and-m-e-shop-copy-3.onrender.com/api/promocodes/delete/${id}`);
                 setMessage('Promo code deleted successfully!');
                 setIsSuccess(true);
                 fetchPromoCodes();
